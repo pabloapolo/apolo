@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>IPTV Web Player</title>
+    <link rel="stylesheet" href="styles.css" />
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@1.5.17/dist/hls.min.js" defer></script>
+    <script src="app.js" defer></script>
+  </head>
+  <body>
+    <header>
+      <h1>IPTV Web Player</h1>
+      <p>Abra listas IPTV (URL + usuário + senha) direto no navegador.</p>
+    </header>
+
+    <main>
+      <section class="card">
+        <h2>Conexão</h2>
+        <form id="credentials-form">
+          <div class="grid">
+            <label>
+              URL do servidor
+              <input id="server" type="url" placeholder="http://provedor.com:8080" required />
+            </label>
+            <label>
+              Usuário
+              <input id="username" type="text" placeholder="usuario" required />
+            </label>
+            <label>
+              Senha
+              <input id="password" type="password" placeholder="senha" required />
+            </label>
+            <label>
+              Formato
+              <select id="stream-format">
+                <option value="m3u8" selected>HLS (m3u8)</option>
+                <option value="ts">MPEG-TS (ts)</option>
+              </select>
+            </label>
+          </div>
+
+          <details>
+            <summary>Opções avançadas</summary>
+            <label>
+              Proxy CORS (opcional)
+              <input id="cors-proxy" type="url" placeholder="https://seu-proxy.exemplo/?url=" />
+            </label>
+            <p class="hint">
+              Se o provedor bloquear acesso direto pelo navegador, use um proxy CORS no formato
+              <code>https://proxy/?url=</code>.
+            </p>
+          </details>
+
+          <div class="actions">
+            <button type="submit">Carregar canais</button>
+            <button type="button" id="clear-data" class="secondary">Limpar dados salvos</button>
+          </div>
+        </form>
+        <p id="status" role="status" aria-live="polite"></p>
+      </section>
+
+      <section class="layout">
+        <section class="card channels">
+          <div class="list-header">
+            <h2>Canais</h2>
+            <input id="channel-filter" type="search" placeholder="Buscar canal..." />
+          </div>
+          <ul id="channel-list"></ul>
+        </section>
+
+        <section class="card player">
+          <h2>Player</h2>
+          <video id="video" controls playsinline></video>
+          <p id="now-playing">Nenhum canal selecionado.</p>
+        </section>
+      </section>
+    </main>
+  </body>
+</html>
